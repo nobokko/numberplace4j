@@ -1,0 +1,46 @@
+<!--/* src/main/resources/templates/sudoku.html */-->
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>sudoku</title>
+    <style>
+        .grid-container>:nth-child(odd) {
+            background-color: #d7d7f7;
+        }
+        .grid-container>:nth-child(even) {
+            background-color: #f7d7d7;
+        }
+        .grid-container>:nth-child(3n):not(:nth-child(9n)) {
+            border-right: solid 2px #ffffff;
+        }
+        .grid-container>:nth-child(n+28):nth-child(-n+63):not(:nth-child(n+37):nth-child(-n+54)) {
+            border-top: solid 2px #ffffff;
+        }
+    </style>
+    <script type="module" src="js/np-container.js"></script>
+    <script type="module" src="js/np-cell.js"></script>
+</head>
+<body>
+    <form action="/sudoku" method="get">
+        <input type="submit" name="request" value="new"></input>
+        <input type="submit" name="request" value="save"></input>
+        <input type="submit" name="request" value="solve"></input>
+        <np-container>
+            <div slot="container" class="grid-container">
+                <th:block th:each="rows, rows_status : ${cells}">
+                    <th:block
+                        th:each="cell, cell_status : ${rows}"
+                    >
+                        <np-cell
+                            th:data-row="${rows_status.index}"
+                            th:data-column="${cell_status.index}"
+                            th:value="${cell}"
+                        ></np-cell>
+                    </th:block>
+                </th:block>
+            </div>
+        </np-container>
+    </form>
+</body>
+</html>
